@@ -22,7 +22,7 @@ export default function ChangePasswordPage() {
 			setError('Provide your reset code and both password fields.')
 			return
 		}
-
+        
 		if (newPassword.length < 6) {
 			setError('New password must be at least 6 characters.')
 			return
