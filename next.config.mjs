@@ -1,4 +1,16 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {}
+const nextConfig = {
+    turbopack: {
+        root: process.cwd(),
+    },
+    images: {
+        remotePatterns: [
+            {
+                protocol: 'https',
+                hostname: 'i.pinimg.com',
+            },
+        ],
+    },
+}
 
 export default nextConfig
