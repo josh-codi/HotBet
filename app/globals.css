@@ -140,3 +140,26 @@ textarea,
 select {
   font-size: 16px !important;
 }
+
+@keyframes hotbet-marquee-scroll {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(calc(-50% - 1rem));
+  }
+}
+
+.hotbet-marquee {
+  mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+}
+
+.hotbet-marquee-track {
+  animation: hotbet-marquee-scroll 26s linear infinite;
+  will-change: transform;
+}
+
+.hotbet-marquee:hover .hotbet-marquee-track {
+  animation-play-state: paused;
+}
