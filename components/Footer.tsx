@@ -15,7 +15,7 @@ const partners = [
 
 export default function Footer() {
     return (
-        <div className='w-full flex flex-col items-center py-8 text-center border-t bg-slate-900 dark:bg-background text-white'>
+        <div className='w-full flex flex-col items-center py-8 text-center border-t bg-slate-900 dark:bg-background text-white overflow-hidden'>
             <Wrapper>
                 <div className="flex flex-col items-center gap-1">
                     <b>Official Betting Partners <br /><p className="font-light text-sm">The world most visited betting platform.</p></b>

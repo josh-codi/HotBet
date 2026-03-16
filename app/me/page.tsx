@@ -17,7 +17,7 @@ export default function MePage() {
         <div className='w-full h-full flex flex-col items-center gap-5 py-4 sm:py-6'>
             <Wrapper className='gap-4 flex-row items-start h-full'>
                 <section className='w-full h-full rounded-lg border p-4 sm:p-5'>
-                    <GoBack/>
+                    <GoBack />
                     <div className="flex flex-col">
                         <h1 className='text-xl sm:text-2xl font-semibold'>My Account</h1>
                         <p className='text-sm text-muted-foreground mt-1'>
@@ -54,7 +54,7 @@ export default function MePage() {
                                     </span>
                                 )}
                             </div>
-                            <span className="text-primary flex items-center gap-1">View all <ChevronRight/></span>
+                            <span className="text-primary flex items-center gap-1">View all <ChevronRight /></span>
                         </button>
                         <button className="w-full flex items-center justify-between rounded-lg border h-12 px-3">
                             <span>Change Password</span>
@@ -62,7 +62,7 @@ export default function MePage() {
                         </button>
                     </div>
                 </section>
-                <BettingSlip/>
+                <BettingSlip />
             </Wrapper>
         </div>
     )
