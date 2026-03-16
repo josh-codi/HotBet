@@ -1,5 +1,4 @@
 'use client';
-import siteInfo from '@/lib/site-info'
 import routes from '@/routes'
 import { Menu, UserCircle2 } from 'lucide-react'
 import Link from 'next/link'
@@ -8,7 +7,6 @@ import Wrapper from './Wrapper'
 import { Button } from './ui/button'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from './ui/dropdown-menu'
 import BrandName from './BrandName'
-import { useUserStore } from '@/lib/user-store';
 import { usePathname } from 'next/navigation';
 
 export default function Header() {

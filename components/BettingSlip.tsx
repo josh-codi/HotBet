@@ -1,7 +1,7 @@
 'use client'
 
 import React from 'react'
-import { Info, Share2, X } from 'lucide-react'
+import { Share2, X } from 'lucide-react'
 import { Button } from './ui/button'
 import { Input } from './ui/input'
 import { useBettingSlipStore } from '../lib/betting-slip-store'

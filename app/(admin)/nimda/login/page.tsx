@@ -48,6 +48,7 @@ export default function AdminLogin() {
         <div className="w-full flex flex-col items-center">
             <Wrapper>
                 <section className='w-full sm:h-auto h-[80dvh] sm:rounded-lg sm:p-5 flex flex-col items-center'>
+                    <GoBack />
                     <div className='w-full mb-4'>
                         <h1 className='text-xl sm:text-2xl font-semibold'>Admin Login</h1>
                         <p className='text-sm text-muted-foreground'>
@@ -55,7 +56,7 @@ export default function AdminLogin() {
                         </p>
                     </div>
                     <br />
-                    <form onSubmit={handleSubmit} className='sm:w-[500px] space-y-4'>
+                    <form onSubmit={handleSubmit} className='sm:w-125 space-y-4'>
                         <label className='flex flex-col gap-1 text-sm'>
                             <span className='text-muted-foreground'>Email</span>
                             <Input

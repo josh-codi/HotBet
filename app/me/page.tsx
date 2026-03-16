@@ -10,7 +10,6 @@ import { ChevronRight } from 'lucide-react'
 import Link from 'next/link'
 
 export default function MePage() {
-    const hasHydrated = useBetsStore((state) => state.hasHydrated)
     const tickets = useBetsStore((state) => state.tickets)
     const pendingCount = tickets.filter((ticket) => ticket.status === 'pending').length
 
@@ -26,8 +25,8 @@ export default function MePage() {
                         </p>
                         <b className="text-xl my-2">GHS 875.00</b>
                         <div className="flex items-center gap-2">
-                            <Button className='px-10' size='lg'>Deposit</Button>
-                            <Button className='px-10' variant='outline' size='lg'>Withdraw</Button>
+                            <Link href={routes.deposit.index}><Button className='px-10' size='lg'>Deposit</Button></Link>
+                            <Link href={routes.withdrawal.index}><Button className='px-10' variant='outline' size='lg'>Withdraw</Button></Link>
                         </div>
                     </div>
                     <div className="w-full flex flex-col gap-2 my-4 p-3 border rounded-lg">
