@@ -10,6 +10,7 @@ import React from 'react'
 export default function SignupPage() {
 	const [name, setName] = React.useState('')
 	const [email, setEmail] = React.useState('')
+	const [referralCode, setReferralCode] = React.useState('')
 	const [password, setPassword] = React.useState('')
 	const [confirmPassword, setConfirmPassword] = React.useState('')
 	const [error, setError] = React.useState('')
@@ -40,12 +41,16 @@ export default function SignupPage() {
 			return
 		}
 
-		setSuccess('Account created successfully. You can now log in.')
+		setSuccess(
+			referralCode.trim()
+				? 'Account created successfully. Referral code applied. You can now log in.'
+				: 'Account created successfully. You can now log in.'
+		)
 	}
 
 	return (
 		<section className='w-full sm:h-auto h-[80dvh] sm:rounded-lg sm:border sm:p-5'>
-			<GoBack/>
+			<GoBack />
 			<div className='mb-4'>
 				<h1 className='text-xl sm:text-2xl font-semibold'>Create Account</h1>
 				<p className='text-sm text-muted-foreground'>
@@ -75,6 +80,16 @@ export default function SignupPage() {
 						onChange={(event) => setEmail(event.target.value)}
 						placeholder='you@example.com'
 						required
+					/>
+				</label>
+
+				<label className='flex flex-col gap-1 text-sm'>
+					<span className='text-muted-foreground'>Referral Code</span>
+					<Input
+						type='text'
+						value={referralCode}
+						onChange={(event) => setReferralCode(event.target.value.toUpperCase())}
+						placeholder='Optional referral code'
 					/>
 				</label>
 

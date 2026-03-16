@@ -27,6 +27,7 @@ const routes = {
     },
     admin: {
         index: '/nimda',
+        login: '/nimda/login',
         matches: {
             index: '/nimda/matches',
             match: (id: string | number) => `/nimda/matches/${id}`,
