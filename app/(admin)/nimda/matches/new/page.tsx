@@ -4,6 +4,7 @@ import Wrapper from '@/components/Wrapper';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { RefreshCcw } from 'lucide-react';
 import React, { useMemo, useState } from 'react';
 
 type MatchStatus = 'pending' | 'live' | 'finished';
@@ -12,7 +13,6 @@ type MatchFormState = {
     homeTeam: string;
     awayTeam: string;
     league: string;
-    venue: string;
     date: string;
     time: string;
     status: MatchStatus;
@@ -22,7 +22,6 @@ const initialState: MatchFormState = {
     homeTeam: '',
     awayTeam: '',
     league: '',
-    venue: '',
     date: '',
     time: '',
     status: 'pending',
@@ -64,20 +63,28 @@ const oddsMarketConfig = [
         ],
     },
     {
-        market: 'Handicap',
+        market: 'Correct Score',
         fields: [
-            { key: 'handicap.home +1.5', label: 'Home +1.5' },
-            { key: 'handicap.away -1.5', label: 'Away -1.5' },
-            { key: 'handicap.home +1.0', label: 'Home +1.0' },
-            { key: 'handicap.away -1.0', label: 'Away -1.0' },
-            { key: 'handicap.home +0.5', label: 'Home +0.5' },
-            { key: 'handicap.away -0.5', label: 'Away -0.5' },
-            { key: 'handicap.home -0.5', label: 'Home -0.5' },
-            { key: 'handicap.away +0.5', label: 'Away +0.5' },
-            { key: 'handicap.home -1.0', label: 'Home -1.0' },
-            { key: 'handicap.away +1.0', label: 'Away +1.0' },
-            { key: 'handicap.home -1.5', label: 'Home -1.5' },
-            { key: 'handicap.away +1.5', label: 'Away +1.5' },
+            { key: 'correctScore.1-0', label: '1-0' },
+            { key: 'correctScore.2-0', label: '2-0' },
+            { key: 'correctScore.2-1', label: '2-1' },
+            { key: 'correctScore.3-0', label: '3-0' },
+            { key: 'correctScore.3-1', label: '3-1' },
+            { key: 'correctScore.3-2', label: '3-2' },
+            { key: 'correctScore.4-0', label: '4-0' },
+            { key: 'correctScore.4-1', label: '4-1' },
+            { key: 'correctScore.4-2', label: '4-2' },
+            { key: 'correctScore.0-0', label: '0-0' },
+            { key: 'correctScore.1-1', label: '1-1' },
+            { key: 'correctScore.2-2', label: '2-2' },
+            { key: 'correctScore.0-1', label: '0-1' },
+            { key: 'correctScore.0-2', label: '0-2' },
+            { key: 'correctScore.1-2', label: '1-2' },
+            { key: 'correctScore.0-3', label: '0-3' },
+            { key: 'correctScore.1-3', label: '1-3' },
+            { key: 'correctScore.2-3', label: '2-3' },
+            { key: 'correctScore.1-4', label: '1-4' },
+            { key: 'correctScore.2-4', label: '2-4' },
         ],
     },
     {
@@ -141,7 +148,6 @@ export default function NewMatchPage() {
             !form.homeTeam ||
             !form.awayTeam ||
             !form.league ||
-            !form.venue ||
             !form.date ||
             !form.time
         ) {
@@ -165,6 +171,15 @@ export default function NewMatchPage() {
             setOdds({});
         }, 1000);
     };
+
+    const handleAutoGenerateOdds = () => {
+        const generatedOdds: Record<string, string> = {};
+        allOddKeys.forEach((key) => {
+            const randomOdd = (Math.random() * (5 - 1.05) + 1.05).toFixed(2);
+            generatedOdds[key] = randomOdd;
+        });
+        setOdds(generatedOdds);
+    }
 
     return (
         <div className='w-full flex justify-center py-4 sm:py-6'>
@@ -217,18 +232,6 @@ export default function NewMatchPage() {
                                 </label>
 
                                 <label className='flex flex-col gap-1.5 text-xs'>
-                                    <span className='text-muted-foreground'>Venue *</span>
-                                    <Input
-                                        type='text'
-                                        name='venue'
-                                        value={form.venue}
-                                        onChange={handleChange}
-                                        className={inputClass}
-                                        required
-                                    />
-                                </label>
-
-                                <label className='flex flex-col gap-1.5 text-xs'>
                                     <span className='text-muted-foreground'>Date *</span>
                                     <Input
                                         type='date'
@@ -272,10 +275,18 @@ export default function NewMatchPage() {
                         </section>
 
                         <section className='space-y-4'>
-                            <h2 className='text-base font-medium'>Odds Markets</h2>
-                            <p className='text-xs text-muted-foreground'>
-                                Complete all odds options from the sample markets.
-                            </p>
+                            <section className="w-full flex items-center gap-4 justify-between">
+                                <div className="flex flex-col">
+                                    <h2 className='text-base font-medium'>Odds Markets</h2>
+                                    <p className='text-xs text-muted-foreground'>
+                                        Complete all odds options from the sample markets.
+                                    </p>
+                                </div>
+                                <div onClick={handleAutoGenerateOdds} className="cursor-pointer text-primary flex items-center gap-1 text-sm text-nowrap">
+                                    <RefreshCcw className={`size-4 `}/>
+                                    Auto
+                                </div>
+                            </section>
 
                             <div className='space-y-3'>
                                 {oddsMarketConfig.map((section) => (
@@ -310,19 +321,19 @@ export default function NewMatchPage() {
                         )}
                         <div className="grid grid-cols-2 gap-2 sm:w-125">
                             <Button variant='outline'
-                            className='w-full sm:w-auto sm:min-w-40'
-                            disabled={submitting}
+                                className='w-full sm:w-auto sm:min-w-40'
+                                disabled={submitting}
                             >
                                 Create & Add Another
                             </Button>
-                        <Button
-                            type='submit'
-                            className='w-full '
-                            disabled={submitting}
-                        >
-                            {submitting ? 'Creating...' : 'Create Match'}
-                        </Button>
-                        
+                            <Button
+                                type='submit'
+                                className='w-full '
+                                disabled={submitting}
+                            >
+                                {submitting ? 'Creating...' : 'Create Match'}
+                            </Button>
+
                         </div>
                     </form>
                 </div>

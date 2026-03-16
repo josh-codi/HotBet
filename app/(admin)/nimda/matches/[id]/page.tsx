@@ -184,7 +184,7 @@ export default function AdminMatchDetail() {
                         {match.homeTeam} vs {match.awayTeam}
                     </h1>
                     <p className='text-xs sm:text-sm text-muted-foreground wrap-break-word'>
-                        {new Date(match.dateTime).toLocaleString()} • {match.venue}
+                        {new Date(match.dateTime).toLocaleString()}
                     </p>
                 </div>
 

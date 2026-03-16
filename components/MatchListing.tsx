@@ -43,7 +43,6 @@ export default function MatchListing({ match, admin }: props) {
                             <span className='leading-tight'>{match.homeTeam}</span>
                             <span className='leading-tight'>{match.awayTeam}</span>
                         </span>
-                        <span className='font-semibold text-nowrap'>2 : 3</span>
                     </div>
                 </div>
             ) : <>
@@ -60,7 +59,6 @@ export default function MatchListing({ match, admin }: props) {
                             <span className='leading-tight'>{match.homeTeam}</span>
                             <span className='leading-tight'>{match.awayTeam}</span>
                         </span>
-                        <b className="text-nowrap">0 : 0</b>
                     </div>
                 </Link>
                 <div className="w-full grid grid-cols-3 gap-2">

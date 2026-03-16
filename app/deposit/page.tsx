@@ -8,10 +8,10 @@ import { Input } from '@/components/ui/input'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import React from 'react'
 
-const quickAmounts = [20, 50, 100, 200]
+const quickAmounts = [500, 1000, 2000, 5000]
 
 export default function DepositPage() {
-    const [amount, setAmount] = React.useState('50')
+    const [amount, setAmount] = React.useState('500')
     const [method, setMethod] = React.useState('Mobile Money')
     const [message, setMessage] = React.useState('')
 
@@ -19,8 +19,8 @@ export default function DepositPage() {
         event.preventDefault()
         const numericAmount = Number(amount)
 
-        if (!Number.isFinite(numericAmount) || numericAmount <= 0) {
-            setMessage('Enter a valid amount greater than 0.')
+        if (!Number.isFinite(numericAmount) || numericAmount < 500) {
+            setMessage('Minimum deposit is GHS 500.00.')
             return
         }
 
@@ -29,18 +29,18 @@ export default function DepositPage() {
 
     return (
         <div className='w-full flex flex-col items-center gap-5 py-4 sm:py-6'>
-            <Wrapper className='gap-4 flex-row items-start'>
+            <Wrapper className='md:gap-4 flex-row items-start'>
                 <div className="flex flex-col w-full">
-                    <GoBack/>
+                    <GoBack />
                     <div className='w-full mb-4'>
                         <h1 className='text-xl sm:text-2xl font-semibold'>Deposit</h1>
-                        <p className='text-sm text-muted-foreground'>
+                        <p className='text-xs sm:text-sm text-muted-foreground'>
                             Fund your wallet securely and keep betting without interruption.
                         </p>
                     </div>
 
                     <section className='w-full rounded-lg border p-4 sm:p-5'>
-                        <p className="text-sm text-muted-foreground mb-5">
+                        <p className="text-xs sm:text-sm text-muted-foreground mb-5">
                             Easily fund your HotBet wallet using your preferred payment method. Enter the amount you want to deposit below to continue.
                             <span className='text-yellow-600'>Please make sure your payment account is active and has enough funds before submitting your deposit.</span>
                         </p>
@@ -62,12 +62,13 @@ export default function DepositPage() {
                                 <span className='text-muted-foreground'>Amount</span>
                                 <Input
                                     type='number'
-                                    min={1}
+                                    min={500}
                                     step='0.01'
                                     value={amount}
                                     onChange={(event) => setAmount(event.target.value)}
                                     className='h-10 rounded-md border bg-background px-3 text-sm'
                                 />
+                                <span className='text-xs text-muted-foreground'>Minimum deposit: GHS 500.00</span>
                             </label>
 
                             <label className='flex flex-col gap-1 text-sm'>
@@ -90,13 +91,13 @@ export default function DepositPage() {
 
                             {message && <p className='text-sm text-muted-foreground'>{message}</p>}
                             <br />
-                            <span className="text-sm">
+                            <p className="text-xs sm:text-sm leading-tight">
                                 What happens next? Confirm deposit request to <span className='text-yellow-600'>on your phone</span> to complete the deposit. Note: Make sure any pop-up blocker is disabled.
-                            </span>
+                            </p>
                         </form>
                     </section>
                 </div>
-                <BettingSlip/>
+                <BettingSlip />
             </Wrapper>
         </div>
     )

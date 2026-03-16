@@ -73,23 +73,23 @@ export default function AdminDashboard() {
     ]
 
     return (
-        <div className='w-full min-h-svh flex flex-col items-center px-4 py-6'>
+        <div className='w-full min-h-svh flex flex-col items-center py-4 sm:py-6'>
             <Wrapper className='w-full max-w-6xl gap-4'>
-                <section className="w-full rounded-2xl border p-5">
+                <section className="w-full">
                     <div className="flex flex-col">
-                        <b className='text-2xl'>Admin Dashboard</b>
+                        <b className='text-xl md:text-2xl'>Admin Dashboard</b>
                         <p className='text-sm text-muted-foreground mt-1'>
                             Monitor platform activity and manage users, matches, and funds.
                         </p>
                     </div>
-                    <div className="mt-4 flex flex-wrap items-center gap-2">
+                    <div className="mt-4 flex items-center overflow-x-auto text-nowrap gap-2">
                         {tabs.map((tab) => (
                             <Link href={tab.link}
                                 key={tab.key}
                                 type='button'
                                 className={`rounded-xl px-4 py-2 text-sm font-semibold transition-colors ${pathname === tab.link
                                     ? 'bg-primary text-primary-foreground'
-                                    : 'bg-white/5 text-white/80 hover:bg-white/10 hover:text-primary'
+                                    : 'bg-white/5 dark:text-white/80 hover:bg-white/10 hover:text-primary'
                                     }`}
                             >
                                 {tab.label}

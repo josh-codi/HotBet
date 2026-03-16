@@ -41,6 +41,35 @@ type RawOdds = {
 
 const n = (value: number) => Number(Math.max(1.05, value).toFixed(2))
 
+const buildCorrectScoreOdds = (homeWin: number, draw: number, awayWin: number) => {
+    const homeStrength = awayWin / homeWin
+    const awayStrength = homeWin / awayWin
+    const drawWeight = draw / 3
+
+    return {
+        '1-0': n(6.6 - homeStrength * 0.6),
+        '2-0': n(8.7 - homeStrength * 0.55),
+        '2-1': n(8.2 - homeStrength * 0.45),
+        '3-0': n(14.2 - homeStrength * 0.4),
+        '3-1': n(13.6 - homeStrength * 0.38),
+        '3-2': n(19.8 - homeStrength * 0.26),
+        '4-0': n(28.4 - homeStrength * 0.18),
+        '4-1': n(30.1 - homeStrength * 0.16),
+        '4-2': n(41.5 - homeStrength * 0.12),
+        '0-0': n(7.4 + drawWeight * 0.8),
+        '1-1': n(6.0 + drawWeight * 0.55),
+        '2-2': n(12.8 + drawWeight * 0.32),
+        '0-1': n(6.7 - awayStrength * 0.5),
+        '0-2': n(10.6 - awayStrength * 0.32),
+        '1-2': n(9.1 - awayStrength * 0.4),
+        '0-3': n(22.9 - awayStrength * 0.18),
+        '1-3': n(18.4 - awayStrength * 0.22),
+        '2-3': n(24.7 - awayStrength * 0.16),
+        '1-4': n(43.6 - awayStrength * 0.1),
+        '2-4': n(53.2 - awayStrength * 0.08)
+    }
+}
+
 const buildRawOdds = (homeWin: number, draw: number, awayWin: number): RawOdds => {
     const over25 = n(1.45 + (draw - 3.0) * 0.18)
 
@@ -95,6 +124,7 @@ const baseMatches: BaseMatch[] = [
 
 export default baseMatches.map((match) => {
     const raw = buildRawOdds(match.homeWin, match.draw, match.awayWin)
+    const correctScore = buildCorrectScoreOdds(match.homeWin, match.draw, match.awayWin)
 
     return {
         id: match.id,
@@ -128,6 +158,7 @@ export default baseMatches.map((match) => {
                 awayOrDraw: raw.awayOrDraw,
                 homeOrAway: raw.homeOrAway
             },
+            correctScore,
             handicap: {
                 'home +1.5': n(1 + (raw.homeWin - 1) * 0.28),
                 'away -1.5': n(raw.awayWin * 1.72),

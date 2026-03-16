@@ -1,4 +1,5 @@
 'use client';
+import LiveScoresSection from "@/components/LiveScoresSection"
 import MatchListing from "@/components/MatchListing"
 import BettingSlip from "@/components/BettingSlip"
 import { Button } from "@/components/ui/button"
@@ -89,6 +90,9 @@ export default function Page() {
               Load Code
             </Button>
           </div>
+
+          {/* Live scores from API-Football */}
+          <LiveScoresSection />
 
           {/* Matches list */}
           <div className="w-full flex flex-col gap-3">

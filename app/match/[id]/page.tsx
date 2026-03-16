@@ -26,19 +26,10 @@ export default function MatchPage() {
         { key: 'bothTeamsToScore', label: 'BTTS' },
         { key: 'goals', label: 'Goals' },
         { key: 'doubleChance', label: 'Double Chance' },
-        { key: 'handicap', label: 'Handicap' },
+        { key: 'correctScore', label: 'Correct Score' },
         { key: 'firstHalfResult', label: '1st Half' },
         { key: 'drawNoBet', label: 'Draw No Bet' },
         { key: 'cleanSheet', label: 'Clean Sheet' }
-    ] as const
-
-    const handicapLines = [
-        { line: '+1.5', home: 'home +1.5', away: 'away -1.5' },
-        { line: '+1.0', home: 'home +1.0', away: 'away -1.0' },
-        { line: '+0.5', home: 'home +0.5', away: 'away -0.5' },
-        { line: '-0.5', home: 'home -0.5', away: 'away +0.5' },
-        { line: '-1.0', home: 'home -1.0', away: 'away +1.0' },
-        { line: '-1.5', home: 'home -1.5', away: 'away +1.5' }
     ] as const
 
     const [activeTab, setActiveTab] = React.useState<(typeof tabConfig)[number]['key']>('all')
@@ -66,11 +57,13 @@ export default function MatchPage() {
     const oddsByGroup: Record<OddsGroupKey, Record<string, number>> = match.odds
     const marketGroups: Array<{ key: OddsGroupKey; title: string; values: Record<string, number> }> =
         activeTab === 'all'
-            ? (Object.keys(oddsByGroup) as OddsGroupKey[]).map((key) => ({
-                key,
-                title: tabConfig.find((tab) => tab.key === key)?.label ?? labelize(key),
-                values: oddsByGroup[key]
-            }))
+            ? (Object.keys(oddsByGroup) as OddsGroupKey[])
+                .filter((key) => key !== 'handicap')
+                .map((key) => ({
+                    key,
+                    title: tabConfig.find((tab) => tab.key === key)?.label ?? labelize(key),
+                    values: oddsByGroup[key]
+                }))
             : [
                 {
                     key: activeTab as OddsGroupKey,
@@ -88,7 +81,7 @@ export default function MatchPage() {
                 key={`${market}-${option}`}
                 type='button'
                 variant={isSelected ? 'default' : 'secondary'}
-                className={`h-auto min-h-10 w- justify-between px-3 py-2 ${className}`}
+                className={`h-auto min-h-10 w-full justify-between px-3 py-2 ${className}`}
                 onClick={() =>
                     toggleSelection({
                         id: selectionId,
@@ -123,14 +116,8 @@ export default function MatchPage() {
                                 </div>
 
                                 <div className='flex flex-col w-full sm:text-xl md:text-2xl font-semibold leading-tight '>
-                                    <span className="w-full flex items-center justify-between">
-                                        {match.homeTeam}
-                                        <span>0</span>
-                                    </span>
-                                    <span className="w-full flex items-center justify-between">
-                                        {match.awayTeam}
-                                        <span>0</span>
-                                    </span>
+                                    <span className="w-full">{match.homeTeam}</span>
+                                    <span className="w-full">{match.awayTeam}</span>
                                 </div>
                                 <span className='text-[11px] sm:text-xs text-center text-muted-foreground'>
                                     {formatDate(match.dateTime)}
@@ -156,37 +143,15 @@ export default function MatchPage() {
                             ))}
                         </div>
 
-                        <div className='flex flex-col gap-5 text-sm'>
+                        <div className='flex flex-col gap-1 text-sm'>
                             {marketGroups.map((group) => {
                                 if (Object.keys(group.values).length === 0) return null
-
-                                if (group.key === 'handicap') {
-                                    return (
-                                        <div key={group.key} className='space-y-3'>
-                                            <h3 className='text-base font-medium'>{group.title}</h3>
-                                            <div className='flex flex-col gap-2'>
-                                                <div className='grid grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] gap-2 px-1 text-center text-xs text-muted-foreground'>
-                                                    <span className='text-left font-medium'>{match.homeTeam}</span>
-                                                    <span className='px-3'>Line</span>
-                                                    <span className='text-right font-medium'>{match.awayTeam}</span>
-                                                </div>
-                                                {handicapLines.map(({ line, home, away }) => (
-                                                    <div key={line} className='grid grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-2'>
-                                                        {renderSelectionButton(group.title, home, group.values[home], home.replace('home ', ''))}
-                                                        <span className='w-12 text-center text-xs text-muted-foreground'>{line}</span>
-                                                        {renderSelectionButton(group.title, away, group.values[away], away.replace('away ', ''))}
-                                                    </div>
-                                                ))}
-                                            </div>
-                                        </div>
-                                    )
-                                }
                                 if (group.key === 'goals') {
                                     const overs = Object.entries(group.values).filter(([option]) => option.toLowerCase().includes('over'))
                                     const unders = Object.entries(group.values).filter(([option]) => option.toLowerCase().includes('under'))
 
                                     return (
-                                        <div key={group.key} className='space-y-3'>
+                                        <div key={group.key} className='space-y-3 border-t py-2'>
                                             <h3 className='text-base font-medium'>{group.title}</h3>
                                             <div className='grid gap-2 grid-cols-2'>
                                                 <div className='flex flex-col gap-2'>
@@ -199,13 +164,13 @@ export default function MatchPage() {
                                         </div>
                                     )
                                 }
-                                if (group.key === 'doubleChance'){
+                                if (group.key === 'doubleChance') {
                                     const homeOrDraw = group.values['homeOrDraw']
                                     const awayOrDraw = group.values['awayOrDraw']
                                     const homeOrAway = group.values['homeOrAway']
 
                                     return (
-                                        <div key={group.key} className='space-y-3'>
+                                        <div key={group.key} className='space-y-3 border-t py-2'>
                                             <h3 className='text-base font-medium'>{group.title}</h3>
                                             <div className='grid grid-cols-3 gap-2'>
                                                 {homeOrDraw && renderSelectionButton(group.title, 'homeOrDraw', homeOrDraw, 'H/D', 'w-full')}
@@ -213,10 +178,11 @@ export default function MatchPage() {
                                                 {homeOrAway && renderSelectionButton(group.title, 'homeOrAway', homeOrAway, 'H/A', 'w-full')}
                                             </div>
                                         </div>
-                                )}
+                                    )
+                                }
 
                                 return (
-                                    <div key={group.key} className='space-y-3'>
+                                    <div key={group.key} className='space-y-3 border-t py-2'>
                                         <h3 className='text-base font-medium'>{group.title}</h3>
                                         <div className='w-full grid grid-cols-3 gap-2 '>
                                             {Object.entries(group.values).map(([option, odd]) => (

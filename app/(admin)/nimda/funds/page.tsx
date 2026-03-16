@@ -79,7 +79,7 @@ export default function FundPage() {
 
                 <section className='w-full overflow-hidden rounded-md border border-zinc-200 '>
                     <div className='w-full overflow-x-auto'>
-                        <table className='w-full text-sm text-left'>
+                        <table className='w-full text-sm text-left text-nowrap'>
                             <thead className='bg-muted'>
                                 <tr className='text-zinc-800 dark:text-zinc-100'>
                                     <th className='px-6 py-4 font-medium'>Transaction ID</th>

@@ -12,6 +12,9 @@ const routes = {
     deposit: {
         index: "/deposit",
     },
+    withdrawal: {
+        index: "/withdrawal",
+    },
     bets: {
         index: "/bets",
         ticket: (id: string | number) => `/bets/${id}`,

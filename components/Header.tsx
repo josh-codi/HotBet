@@ -17,7 +17,7 @@ export default function Header() {
     return (
         <div className='w-full flex justify-center min-h-14 border-b bg-slate-900 dark:bg-background text-white sticky top-0 z-50'>
             <Wrapper className='flex-row items-center justify-between dark:bg-background lg:px-4'>
-                <BrandName className='text-xl text-white border-primary bg-primary border w-fit py-1 px-4 text-center rounded-lg' />
+                <BrandName className='text-base sm:text-lg md:text-xl text-white border-primary bg-primary border w-fit py-1 px-4 text-center rounded-lg' />
 
                 {
                     path.includes('nimda') ? (
