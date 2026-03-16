@@ -1,3 +1,4 @@
+'use client';
 import MatchListing from "@/components/MatchListing"
 import BettingSlip from "@/components/BettingSlip"
 import { Button } from "@/components/ui/button"
@@ -5,6 +6,8 @@ import Wrapper from "@/components/Wrapper"
 import matches from "../constants/matches"
 import { Clock1, Code, Gamepad2, Trophy } from "lucide-react"
 import Image from "next/image"
+import Link from "next/link"
+import routes from "@/routes"
 
 export default function Page() {
   const liveCount = matches.filter((m) => m.status === 'live').length
@@ -35,45 +38,52 @@ export default function Page() {
                 </h1>
                 <p className="text-xs sm:text-sm italic text-white/90 max-w-[90%]">
                   Experience the thrill of sports betting like never before. <span className="md:block hidden">Sign up today and get a 100% welcome bonus on your first deposit. Don&apos;t miss out on the action!</span>
-                <br />
-                <span className="text-[11px] text-yellow-300 font-semibold">
-                  100% Welcome Bonus!
-                </span>
+                  <br />
+                  <span className="text-[11px] text-yellow-300 font-semibold">
+                    100% Welcome Bonus!
+                  </span>
                 </p>
               </div>
-              <Button className="self-start px-6 sm:px-10 lg:mt-2" size="sm">
-                Get Started
-              </Button>
+              <Link href={routes.auth.signup}>
+                <Button variant={'outline'} className="self-start px-6 sm:px-10 lg:mt-2" size="sm">
+                  Get Started
+                </Button>
+              </Link>
             </div>
           </div>
 
           {/* Filter tabs — horizontally scrollable on mobile */}
-          <div className="flex items-center gap-2 sm:gap-3 overflow-x-auto pb-0.5 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+          <div className="grid grid-cols-3 sm:flex items-center gap-2 sm:gap-3 overflow-x-auto pb-0.5 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
             <Button
               type="button"
               variant="default"
-              className="shrink-0 h-10 px-4 sm:px-5 gap-1.5 text-sm"
+              className="shrink-0 px-4 sm:px-5 gap-1.5 text-sm"
             >
               <Gamepad2 className="size-4" />
               Football
             </Button>
+            <Link href={routes.live.index}>
+              <Button
+                type="button"
+                variant="outline"
+                className="shrink-0 px-4 sm:px-5 gap-1.5 text-sm"
+              >
+                <Clock1 className="size-4" />
+                Live
+                {liveCount > 0 && (
+                  <span className="ml-1 flex h-4.5 min-w-4.5 items-center justify-center rounded-full bg-green-500 px-1 text-[10px] font-bold text-white">
+                    {liveCount}
+                  </span>
+                )}
+              </Button>
+            </Link>
             <Button
               type="button"
               variant="outline"
-              className="shrink-0 h-10 px-4 sm:px-5 gap-1.5 text-sm"
-            >
-              <Clock1 className="size-4" />
-              Live
-              {liveCount > 0 && (
-                <span className="ml-1 flex h-4.5 min-w-4.5 items-center justify-center rounded-full bg-green-500 px-1 text-[10px] font-bold text-white">
-                  {liveCount}
-                </span>
-              )}
-            </Button>
-            <Button
-              type="button"
-              variant="outline"
-              className="shrink-0 h-10 px-4 sm:px-5 gap-1.5 text-sm"
+              className="shrink-0 px-4 sm:px-5 gap-1.5 text-sm"
+              onClick={() => {
+                document.getElementById('show-betting-slip')?.click();
+              }}
             >
               <Code className="size-4" />
               Load Code
@@ -82,7 +92,7 @@ export default function Page() {
 
           {/* Matches list */}
           <div className="w-full flex flex-col gap-3">
-            <div className="flex items-center justify-between w-full border-b pb-3">
+            <div className="flex sm:flex-row flex-col sm:items-center sm:justify-between w-full border-b pb-3">
               <div>
                 <b className="text-base sm:text-lg">Available Matches</b>
                 <p className="text-xs sm:text-sm text-muted-foreground">
@@ -94,7 +104,7 @@ export default function Page() {
               </span>
             </div>
             <div className="flex flex-col w-full gap-1">
-              {matches.map((match, index) => (
+              {(matches.filter(match => match.status !== 'finished')).map((match, index) => (
                 <MatchListing key={index} match={match} />
               ))}
             </div>

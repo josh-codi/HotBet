@@ -15,9 +15,9 @@ export default function Header() {
     const path = usePathname()
 
     return (
-        <div className='w-full flex justify-center min-h-14 border-b bg-slate-900 dark:bg-background text-white sticky top-0 z-55'>
+        <div className='w-full flex justify-center min-h-14 border-b bg-slate-900 dark:bg-background text-white sticky top-0 z-50'>
             <Wrapper className='flex-row items-center justify-between dark:bg-background lg:px-4'>
-                <BrandName className='text-2xl text-primary border w-fit py-1 px-4 text-center rounded-xl' />
+                <BrandName className='text-xl text-white border-primary bg-primary border w-fit py-1 px-4 text-center rounded-lg' />
 
                 {
                     path.includes('nimda') ? (
@@ -36,13 +36,13 @@ export default function Header() {
                             <Link href={routes.live.index} className='md:block hidden'>Live</Link>
                             <Link href={routes.deposit.index} className='md:block hidden'>Deposit</Link>
                             <Link href={routes.bets.index} className='md:block hidden'>Bets</Link>
-                            <p id='account-balance' className='md:hidden'>GHS 0.00</p>
+                            <p id='account-balance' className='md:hidden px-3'>GHS 0.00</p>
                             <div className="flex items-center md:ml-4">
                                 <Link href={routes.me.index} className='flex items-center gap-1'>
                                     <UserCircle2 className='size-5' /> Me
                                 </Link>
                             </div>
-                            <Link href={routes.auth.login}><Button>Login/Signup</Button></Link>
+                            <Link href={routes.auth.login} className='md:block hidden'><Button>Login/Signup</Button></Link>
                             <DropdownMenu>
                                 <DropdownMenuTrigger asChild className='lg:hidden'>
                                     <Button variant='ghost' size='icon-sm' aria-label='Open menu'>

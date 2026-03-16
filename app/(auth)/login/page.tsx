@@ -1,5 +1,6 @@
 "use client"
 
+import GoBack from '@/components/GoBack'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import routes from '@/routes'
@@ -31,7 +32,8 @@ export default function LoginPage() {
     }
 
     return (
-        <section className='w-full rounded-lg border p-4 sm:p-5'>
+        <section className='w-full sm:h-auto h-[80dvh] sm:rounded-lg sm:border sm:p-5'>
+            <GoBack/>
             <div className='mb-4'>
                 <h1 className='text-xl sm:text-2xl font-semibold'>Login</h1>
                 <p className='text-sm text-muted-foreground'>
@@ -65,10 +67,10 @@ export default function LoginPage() {
                 </label>
 
                 <div className='flex items-center justify-between gap-3 text-sm'>
-                    <Link href={routes.auth.forgotPassword} className='text-primary hover:underline'>
+                    <Link replace href={routes.auth.forgotPassword} className='text-primary hover:underline'>
                         Forgot password?
                     </Link>
-                    <Link href={routes.auth.signup} className='text-primary hover:underline'>
+                    <Link replace href={routes.auth.signup} className='text-primary hover:underline'>
                         Create account
                     </Link>
                 </div>

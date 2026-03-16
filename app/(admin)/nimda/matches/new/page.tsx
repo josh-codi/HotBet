@@ -32,9 +32,9 @@ const oddsMarketConfig = [
     {
         market: 'Match Result',
         fields: [
-            { key: 'matchResult.homeWin', label: 'Home Win' },
+            { key: 'matchResult.homeWin', label: 'Home' },
             { key: 'matchResult.draw', label: 'Draw' },
-            { key: 'matchResult.awayWin', label: 'Away Win' },
+            { key: 'matchResult.awayWin', label: 'Away' },
         ],
     },
     {
@@ -58,9 +58,9 @@ const oddsMarketConfig = [
     {
         market: 'Double Chance',
         fields: [
-            { key: 'doubleChance.homeOrDraw', label: 'Home Or Draw' },
-            { key: 'doubleChance.awayOrDraw', label: 'Away Or Draw' },
-            { key: 'doubleChance.homeOrAway', label: 'Home Or Away' },
+            { key: 'doubleChance.homeOrDraw', label: 'H/D' },
+            { key: 'doubleChance.awayOrDraw', label: 'A/D' },
+            { key: 'doubleChance.homeOrAway', label: 'H/A' },
         ],
     },
     {
@@ -83,9 +83,9 @@ const oddsMarketConfig = [
     {
         market: 'First Half Result',
         fields: [
-            { key: 'firstHalfResult.homeWin', label: 'Home Win' },
+            { key: 'firstHalfResult.homeWin', label: 'Home' },
             { key: 'firstHalfResult.draw', label: 'Draw' },
-            { key: 'firstHalfResult.awayWin', label: 'Away Win' },
+            { key: 'firstHalfResult.awayWin', label: 'Away' },
         ],
     },
     {

@@ -1,5 +1,6 @@
 "use client"
 
+import GoBack from '@/components/GoBack'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import routes from '@/routes'
@@ -37,7 +38,9 @@ export default function ChangePasswordPage() {
 	}
 
 	return (
-		<section className='w-full rounded-lg border p-4 sm:p-5'>
+		<section className='w-full sm:h-auto h-[80dvh] sm:rounded-lg sm:border sm:p-5'>
+			<GoBack/>
+
 			<div className='mb-4'>
 				<h1 className='text-xl sm:text-2xl font-semibold'>Change Password</h1>
 				<p className='text-sm text-muted-foreground'>
@@ -86,10 +89,10 @@ export default function ChangePasswordPage() {
 				</Button>
 
 				<div className='flex items-center justify-between text-sm'>
-					<Link href={routes.auth.forgotPassword} className='text-primary hover:underline'>
+					<Link replace href={routes.auth.forgotPassword} className='text-primary hover:underline'>
 						Request new reset link
 					</Link>
-					<Link href={routes.auth.login} className='text-primary hover:underline'>
+					<Link replace href={routes.auth.login} className='text-primary hover:underline'>
 						Back to Login
 					</Link>
 				</div>

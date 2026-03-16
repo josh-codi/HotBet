@@ -2,6 +2,7 @@ import { BetTicket } from '@/lib/bets-store'
 import routes from '@/routes'
 import Link from 'next/link'
 import React from 'react'
+import Tag from '@/components/Tag'
 
 export default function BetCard({ ticket }: { ticket: BetTicket }) {
     return (
@@ -14,7 +15,7 @@ export default function BetCard({ ticket }: { ticket: BetTicket }) {
                 <div className="w-full flex items-center justify-between py-2 border-b">
                     <span className="flex flex-col">
                         <small>Status</small>
-                        <span className="flex items-center gap-1 capitalize font-semibold">{ticket.status}</span>
+                        <Tag status={ticket.status} />
                     </span>
                     <span>0/{ticket.selections.length}</span>
                 </div>

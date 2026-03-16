@@ -7,6 +7,7 @@ import { Plus } from 'lucide-react'
 import Link from 'next/link'
 import routes from '@/routes'
 import { buildSelectionId, useBettingSlipStore } from '../lib/betting-slip-store'
+import Tag from './Tag'
 
 type props = {
     match: typeof matches[0]
@@ -18,9 +19,9 @@ export default function MatchListing({ match, admin }: props) {
     const toggleSelection = useBettingSlipStore((state) => state.toggleSelection)
 
     const options = [
-        { label: '1', option: 'Home Win', odd: match.odds.matchResult.homeWin, icon: null },
+        { label: '1', option: 'Home', odd: match.odds.matchResult.homeWin, icon: null },
         { label: 'X', option: 'Draw', odd: match.odds.matchResult.draw, icon: <Plus className='rotate-45 size-4' /> },
-        { label: '2', option: 'Away Win', odd: match.odds.matchResult.awayWin, icon: null }
+        { label: '2', option: 'Away', odd: match.odds.matchResult.awayWin, icon: null }
     ]
 
     return (
@@ -28,7 +29,10 @@ export default function MatchListing({ match, admin }: props) {
             {admin ? (
                 <div className="w-full flex flex-col gap-1">
                     <span className="w-full flex items-center justify-between text-sm">
-                        <span className='sm:text-sm text-xs'>{match.dateTime} <span className={`ml-2 ${match.status === 'live' ? 'text-green-500' : match.status === 'pending' ? 'text-yellow-500' : 'text-gray-500 border p-1 px-2.5'}`}>{match.status}</span></span>
+                        <span className='sm:text-sm text-xs flex items-center gap-2'>
+                            <span>{match.dateTime}</span>
+                            <Tag status={match.status} />
+                        </span>
                         <div className="flex items-center gap-2">
                             <Link href={routes.admin.matches.match(match.id)}><Button variant='outline' size='xs'>Edit</Button></Link>
                             <Button variant='destructive' size='xs'>Close</Button>
@@ -46,14 +50,17 @@ export default function MatchListing({ match, admin }: props) {
                 <Link href={routes.match.index(match.id)} className="w-full flex flex-col gap-1">
                     <span className="w-full flex items-center justify-between text-xs sm:text-sm">
                         <span>{match.dateTime}</span>
-                        <span className='text-gray-500'>{match.league}</span>
+                        <span className='flex items-center gap-2'>
+                            <span className='text-gray-500'>{match.league}</span>
+                            <Tag status={match.status} />
+                        </span>
                     </span>
                     <div className="flex items-center justify-between w-full">
                         <span className="w-full flex flex-col text-sm sm:text-base md:text-lg font-medium md:font-bold my-2">
                             <span className='leading-tight'>{match.homeTeam}</span>
                             <span className='leading-tight'>{match.awayTeam}</span>
                         </span>
-                            {match.status !== 'pending' ? <b className="text-nowrap">0 : 0</b> : <span className='text-gray-500 text-sm font-semibold'>PENDING</span>}
+                        <b className="text-nowrap">0 : 0</b>
                     </div>
                 </Link>
                 <div className="w-full grid grid-cols-3 gap-2">

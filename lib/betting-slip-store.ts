@@ -34,7 +34,6 @@ export const useBettingSlipStore = create<BettingSlipState>()(
             toggleSelection: (selection) =>
                 set((state) => {
                     const exists = state.selections.some((item) => item.id === selection.id)
-
                     return {
                         selections: exists
                             ? state.selections.filter((item) => item.id !== selection.id)
